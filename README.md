@@ -1,26 +1,57 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Gitbub App
+This project lists users and repositories from github public API. It was developed using React Native, GraphQL, Styeld-component and Typescript. Also it was created automated tests using jest and detox also error tracking with Sentry.
 
-# Getting Started
+## Preview
+![](assets/presentation1.png) ![](assets/presentation2.png)
+
+## Getting Started
+
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
-## Step 1: Start the Metro Server
+>**Version**: Node 20, Java 17
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+### Step 1: Installing dependencies
 
-To start Metro, run the following command from the _root_ of your React Native project:
+First, you will need to install the dependencies of the project.
 
 ```bash
 # using npm
-npm start
+npm install 
 
 # OR using Yarn
-yarn start
+yarn install
 ```
 
-## Step 2: Start your Application
+### Step 2: Installing React Native dependencies
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+First, you will need to install the dependencies of the project.
+
+```bash
+# using npm
+npm install 
+
+# OR using Yarn
+yarn install
+```
+### Step 3: Installing IOS dependencies
+
+Second, you will need to install the native dependencies of the project.
+
+```bash
+# accessing ios/
+cd ios/ 
+
+# install dependencies
+pod install
+
+# going back to root
+cd ..
+```
+
+### Step 4: Start your Application
+
+Start Metro Bundlerin a terminal and in another terminal run the follow commands depending on your OS.
 
 ### For Android
 
@@ -42,38 +73,42 @@ npm run ios
 yarn ios
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+If everything ran correctly, you will have the app running in a Simulator (IOS) or in a Emulator (Android) after some minutes.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-## Step 3: Modifying your App
+## How to run automated tests?
 
-Now that you have successfully run the app, let's modify it.
+### - Running component tests (Jest)
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+You can run the suit of tests using the commands below:
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+```bash
+# using npm
+npm test 
 
-## Congratulations! :tada:
+# OR using Yarn
+yarn test
+```
 
-You've successfully run and modified your React Native App. :partying_face:
+### - Running e2e tests (Detox)
 
-### Now what?
+First of all, you will need to have the detox cli configurated and then you will need generate a Android and IOS build to be able to run the tests.
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+```bash
+# generating a Android build
+detox build --configuration android.emu.release
 
-# Troubleshooting
+# generating a IOS build
+detox build --configuration ios.sim.debug
+```
+After the build generated, you will need to run the tests.
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+```bash
+# running Android e2e tests
+detox test --configuration android.emu.debug
 
-# Learn More
+# running IOS e2e tests
+detox test --configuration ios.sim.debug 
 
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+```
+If no errors showed up, you will see the emulator/simulator opening and running the e2e tests.

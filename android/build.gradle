@@ -11,10 +11,17 @@ buildscript {
         google()
         mavenCentral()
     }
+    allprojects {
+      repositories{
+        maven { // (4)
+          url("$rootDir/../node_modules/detox/Detox-android")
+        }
+      }
+    }
     dependencies {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     }
 }
 
