@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { useNavigation } from '@react-navigation/native';
+import NativeDevSettings from 'react-native/Libraries/NativeModules/specs/NativeDevSettings';
 
 import { Input, Button, Separator } from '~/components';
 import { useStorage } from '~/hooks/storage';
@@ -23,13 +24,18 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const { updateUsers, users } = useStorage();
   const navigation = useNavigation<LoginScreenProp>();
-  const [getUserInfo, { data, loading, error }] = useLazyQuery(GET_USER_INFO);
+  const [getUserInfo, { data, loading, error }] = useLazyQuery(GET_USER_INFO, {fetchPolicy: 'network-only'});
+
+  // Assign this to a dev-only button or useEffect call
+  const connectToRemoteDebugger = () => {
+    NativeDevSettings.setIsDebuggingRemotely(false);
+  };
 
   const description = navigation.canGoBack()
     ? 'Adicione seus novos usuários do GitHub'
     : 'Crie sua conta através do seu usuário do GitHub';
 
-  useEffect(() => {
+  useEffect(() => {       
     if (!loading && !error && !!data) {
       if (data?.user) {
         setErrorMessage('');
@@ -50,7 +56,7 @@ function Login() {
       return;
     }
 
-    await getUserInfo({ variables: { username } });
+    await getUserInfo({ variables: { username }});
   }
 
   return (
@@ -94,7 +100,7 @@ function Login() {
         </Form>
 
         <Label>
-          Termos de <Label underline>política</Label> e{' '}
+          Termos de <Label onPress={connectToRemoteDebugger} underline>política</Label> e{' '}
           <Label underline>privacidade</Label>
         </Label>
       </Content>
