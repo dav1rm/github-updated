@@ -88,6 +88,7 @@ function Repositories() {
 
       <ReposList
         data={filteredRepos}
+        testID='repositories'
         ItemSeparatorComponent={() => <Separator height={8} />}
         renderItem={({ item }) => (
           <RepositoryCard

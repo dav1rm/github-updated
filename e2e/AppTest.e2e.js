@@ -1,7 +1,21 @@
 describe('App E2E Tests', () => {
   beforeAll(async () => {
     await device.launchApp();
-    debugger;
+  });
+
+  afterAll(async () => {
+    await device.terminateApp();
+  });
+
+  it('should not find a username', async () => {
+    await element(by.id('username')).tap();
+    await element(by.id('username')).typeText('davir8');
+    await element(by.text('Buscar usuário')).tap();
+
+    await expect(element(by.text('Cadastrar'))).toBeVisible();
+    await element(by.id('submit')).tap();
+
+    await expect(element(by.id('error-message'))).toBeVisible();
   });
 
   it('should login successfully', async () => {
@@ -9,6 +23,7 @@ describe('App E2E Tests', () => {
     await expect(element(by.text('Crie sua conta através do seu usuário do GitHub'))).toBeVisible();
 
     await element(by.id('username')).tap();
+    await element(by.id('username')).clearText();
     await element(by.id('username')).typeText('dav1rm');
     await element(by.text('Buscar usuário')).tap();
 
@@ -26,6 +41,8 @@ describe('App E2E Tests', () => {
     await element(by.text('Davi')).tap();
 
     await expect(element(by.text('my-app-ionic-3'))).toBeVisible();
+    
+    await element(by.id('repositories')).swipe('up');
   });
 
   it('should add another user successfully', async () => {
@@ -39,7 +56,7 @@ describe('App E2E Tests', () => {
 
     await element(by.id('username')).tap();
     await element(by.id('username')).typeText('jilcimar');
-    await element(by.id('username')).tapReturnKey();
+    await element(by.text('Buscar usuário')).tap();
 
     await expect(element(by.text('Cadastrar'))).toBeVisible();
     await element(by.id('submit')).tap();
