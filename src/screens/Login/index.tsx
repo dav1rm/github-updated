@@ -15,10 +15,12 @@ import {
   Title,
   Description,
   Label,
+  ErrorMessage,
 } from './styles';
 
 function Login() {
   const [username, setUsername] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const { updateUsers, users } = useStorage();
   const navigation = useNavigation<LoginScreenProp>();
   const [getUserInfo, { data, loading, error }] = useLazyQuery(GET_USER_INFO);
@@ -30,17 +32,21 @@ function Login() {
   useEffect(() => {
     if (!loading && !error && !!data) {
       if (data?.user) {
+        setErrorMessage('');
         updateUsers([...users, data?.user]);
 
         if (navigation.canGoBack()) {
           navigation.goBack();
         }
       }
+    } else if (!loading && error) {
+      setErrorMessage(error.message);
     }
   }, [data, error, loading, navigation, updateUsers, users]);
 
   async function handleSearchUser() {
     if (!username) {
+      setErrorMessage("Username is required!");
       return;
     }
 
@@ -70,6 +76,13 @@ function Login() {
             autoCapitalize="none"
             autoCorrect={false}
           />
+
+          {errorMessage && (
+            <>
+              <Separator height={10} />
+              <ErrorMessage testID='error-message'>{errorMessage}</ErrorMessage>
+            </>
+          )}
 
           <Separator height={24} />
 

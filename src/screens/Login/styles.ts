@@ -37,6 +37,13 @@ export const Description = styled.Text`
   color: #7e7e7e;
 `;
 
+export const ErrorMessage = styled.Text`
+  font-size: 14px;
+  line-height: 18px;
+  font-family: 'Mulish-Medium';
+  color: #ff3333;
+`;
+
 interface LabelProps {
   underline?: boolean;
 }
